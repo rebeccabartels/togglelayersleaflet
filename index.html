@@ -19,6 +19,58 @@
 
 
 <div id="mapid" style="width: 600px; height: 400px;"></div>
+<button onclick="togglePoints();">toggle some data!</button>
+
+<style>
+/*Setup*/
+html,
+body {
+  padding: 0;
+  margin: 0;
+}
+html,
+body,
+#mapid {
+  height: 100%;
+  width: 100%;
+}
+
+/*Legend specific*/
+.legend {
+  padding: 6px 8px;
+  font: 14px Arial, Helvetica, sans-serif;
+  background: white;
+  background: rgba(255, 255, 255, 0.8);
+  /*box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);*/
+  /*border-radius: 5px;*/
+  line-height: 24px;
+  color: #555;
+}
+.legend h4 {
+  text-align: center;
+  font-size: 16px;
+  margin: 2px 12px 8px;
+  color: #777;
+}
+
+.legend span {
+  position: relative;
+  bottom: 3px;
+}
+
+.legend i {
+  width: 18px;
+  height: 18px;
+  float: left;
+  margin: 0 8px 0 0;
+  opacity: 0.7;
+}
+
+.legend i.icon {
+  background-size: 18px;
+  background-color: rgba(255, 255, 255, 1);
+}
+</style>
 <script>
 //preliminary stuff 
 	var mymap = L.map('mapid').setView([49.8857, 7.5515], 8);
@@ -30,6 +82,20 @@
 			'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
 		id: 'mapbox.streets'
 	}).addTo(mymap);
+//legend specific 
+var legend = L.control({ position: "topright" });
+legend.onAdd = function(mymap) {
+  var div = L.DomUtil.create("div", "legend");
+  div.innerHTML += "<h4>Season</h4>";
+  div.innerHTML += '<i style="background: #477AC2"></i><span>June</span><br>';
+  div.innerHTML += '<i style="background: #448D40"></i><span>July</span><br>';
+  div.innerHTML += '<i style="background: #E6E696"></i><span>August</span><br>';
+  div.innerHTML += '<i style="background: #E8E6E0"></i><span>September </span><br>';
+
+  return div;
+};
+legend.addTo(mymap);
+
 //layers 
 
 //locations layer 
@@ -135,6 +201,13 @@ L.circle([50.9375, 6.9603], 1000, {
 	}).addTo(mymap).bindPopup("Cologne");
 
 
+//veridici layer 
+
+L.circle([55.9375, 7.9603], 1000, {
+		color: 'orange',
+		fillColor: '#f03',
+		fillOpacity: 1.5
+	}).addTo(mymap).bindPopup("veridici");
 
 
 
@@ -142,13 +215,11 @@ L.circle([50.9375, 6.9603], 1000, {
 
 
 
-
-
-//rhine 
+//rhine river (always show)
 	L.polygon([
-		[51.509, -0.08],
-		[51.503, -0.06],
-		[51.51, -0.047]
+		[48.774, 8.0629],
+		[48.484, 7.811],
+		[48.0820, 7.5915]
 	]).addTo(mymap).bindPopup("I am the Rhine River! Roar!.");
 
 
